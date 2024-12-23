@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}Post{% endblock %}
+
+{% block content %}
+<div class="container" style="width: 95%; margin: auto;">
+   
+    <div style="padding-top:30px; padding-left:30px; background-color: #f7f7f7; border: 1px solid #e3e3e3; margin-bottom: 20px;">
+        <div class="row">
+            <div style="display: flex; align-items: start;">
+                <img src="{{ url_for('static', filename='fotos_perfil/{}'.format(post.autor.foto_perfil)) }}" class="rounded" width="200">
+                <div style="padding-left: 20px; padding-right: 20px;">
+                    <h5 class="card-title">
+                        {{ post.titulo }}
+                        {% if form %} 
+                            <small class="text-muted" style="font-size: 15px;" >                                
+                                - <a href="#form_editarpost">Editar Post</a> / 
+                                   <a href="#" data-bs-toggle="modal" data-bs-target="#excluirpost" class="text-danger">Excluir Post</a>
+                            </small>
+                        {% endif %}
+                    </h5> 
+                    <p class="card-text" style="text-align: justify;">{{ post.corpo }}</p>
+                    <p class="card-text"><small class="text-muted">Publicado por {{ post.autor.nome }} em {{ post.data_criacao.strftime('%d/%m/%Y') }}</small></p>
+                </div>
+            </div>            
+            <div class="row justify-content-center mb-5">
+                <div class="col col" style="text-align: center">
+                    <strong>Cursos</strong><br>
+                    {% for curso in post.autor.cursos.split(';') %}
+                        <button type="button" class="btn btn-success mt-2" disabled>
+                            {{ curso.strip() }}
+                        </button>
+                    {% endfor %}                
+                </div>
+            </div>
+        </div>
+    </div> 
+    {% if form %}
+    <div class="container">
+        <div class="row">
+            <div class="col">   
+                <form method="POST" id="form_editarpost" class="border mt-4 p-4">
+                    {{ form.csrf_token }}
+                    <legend>Editar Post</legend>
+                    <fieldset> 
+                        <div class="form-group">
+                            {{ form.titulo.label(class="form-label") }}
+                            {{ form.titulo(class="form-control") }}
+                            {% if form.titulo.errors %}
+                                {% for error in form.titulo.errors %}
+                                    <div class="alert alert-danger mt-1">{{ error }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ form.corpo.label(class="form-label") }}
+                            {{ form.corpo(class="form-control", rows="5") }}
+                            {% if form.corpo.errors %}
+                                {% for error in form.corpo.errors %}
+                                    <div class="alert alert-danger mt-1">{{ error }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </fieldset>
+                    <div class="d-flex justify-content-end mt-2">
+                        <div style="margin-right: 10px;">
+                            {{ form.botao_criarpost(class="btn btn-primary") }}
+                        </div>                      
+                                                              
+                        <div>
+                            <a href="{{ url_for('home') }}" class="btn btn-primary ml-4"> Voltar à Home</a>
+                        </div>
+                    </div>                    
+                </form>                
+            </div>
+        </div>
+    </div>
+    {% else %} 
+        <div class="d-flex justify-content-end mt-2">                                                               
+            <div>
+                <a href="{{ url_for('home') }}" class="btn btn-primary ml-4"> Voltar à Home</a>
+            </div>
+        </div>
+    {% endif %}  
+</div>
+<!-- Modal -->
+<div class="modal fade" id="excluirpost" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Excluir Post</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Você deseja excluir o post?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <form method="POST" action="{{ url_for('excluir_post', post_id=post.id) }}">
+            <button type="submit" class="btn btn-danger">Excluir Post</button>
+           </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

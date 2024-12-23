@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Contato{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <!-- Card Principal -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-body text-center">
+                <h1 class="display-4">Entre em Contato</h1>
+                <p class="lead text-muted">Para entrar em contato, mande uma mensagem no WhatsApp</p>
+                <hr class="my-4">
+                <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                    <a href="https://wa.me/5511999999999" class="btn btn-success btn-lg px-4">
+                        <i class="fab fa-whatsapp me-2"></i>WhatsApp
+                    </a>
+                    <a href="mailto:contato@exemplo.com" class="btn btn-outline-primary btn-lg px-4">
+                        <i class="fas fa-envelope me-2"></i>E-mail
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cards de Informações -->
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-clock fa-2x text-warning mb-3"></i>
+                        <h5 class="card-title">Horário</h5>
+                        <p class="card-text">
+                            Segunda a Sexta<br>
+                            9h às 18h
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-map-marker-alt fa-2x text-danger mb-3"></i>
+                        <h5 class="card-title">Localização</h5>
+                        <p class="card-text">
+                            São Paulo, SP<br>
+                            Brasil
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-headset fa-2x text-info mb-3"></i>
+                        <h5 class="card-title">Suporte</h5>
+                        <p class="card-text">
+                            Atendimento<br>
+                            24/7
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

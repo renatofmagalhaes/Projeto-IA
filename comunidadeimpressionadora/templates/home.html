@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <div class="container" style="width: 95%; margin: auto;">
+        <h1 style="color: orange; text-align: center;">Comunidade Impressionadora - HashTag Treinamentos</h1>
+        <h2 style="text-align: center;">Alunos expert e a galera da hastag em um só lugar!</h2>
+        <hr>
+    {% for post in posts %}
+        <div style="padding-top:30px; padding-left:30px; background-color: #f7f7f7; border: 1px solid #e3e3e3; margin-bottom: 20px;">
+            <div class="row">
+                <div style="display: flex; align-items: start;">
+                    <img src="{{ url_for('static', filename='fotos_perfil/{}'.format(post.autor.foto_perfil)) }}" class="rounded" width="200">
+                    <div style="padding-left: 20px; padding-right: 20px;">
+                        <a href="{{ url_for('exibir_post', post_id=post.id) }}" style="text-decoration: none; color: black;">
+                            <h5 class="card-title">{{ post.titulo }}</h5>
+                        </a>                        
+                        <p class="card-text" style="text-align: justify;">{{ post.corpo }}</p>
+                        <p class="card-text"><small class="text-muted">Publicado por {{ post.autor.nome }} em {{ post.data_criacao.strftime('%d/%m/%Y') }}</small></p>
+                    </div>
+                </div>            
+                <div class="row justify-content-center mb-5">
+                    <div class="col col" style="text-align: center">
+                        <strong>Cursos</strong><br>
+                        {% for curso in post.autor.cursos.split(';') %}
+                            <button type="button" class="btn btn-success mt-2" disabled>
+                                {{ curso.strip() }}
+                            </button>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %} 
